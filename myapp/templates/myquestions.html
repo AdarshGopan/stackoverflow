@@ -3,28 +3,13 @@
 
 <div class="col-md-10 col-lg-8 col-xl-7">
     <!-- Post preview-->
-    <div class="post-preview">
-        <h2 style="color: rgb(139, 138, 133);margin-left:35%;">QUESTION</h2>
-       <form action="" method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form.as_p}}
-        <input style="margin-left: 43%;" type="submit" class="btn btn-success" value="POST">
-       </form>
-    </div>
-    <!-- Divider-->
-    <hr class="my-4" />
-    <!-- Post preview-->
-   
-</div>
 {%for q in questions%}
 <div class="col-md-10 col-lg-8 col-xl-7">
     <!-- Post preview-->
     <div class="post-preview">
         <a href="post.html">
-            {%if q.image%}
-            <img src="{{q.image.url}}" alt="">
-            {%endif%}
             <h2 class="post-title">{{q.question}}</h2>
+            <h3 class="post-subtitle"></h3>
         </a>
         <p style="font-size: medium;" class="post-meta">
             Posted by
@@ -33,24 +18,10 @@
         </p>
         <div>
             <p>
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
-                  ADD ANSWER
-                </button>
-
                 <button class="btn btn-success" type="button" data-bs-toggle="collapse" data-bs-target="#answerlist{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseExample">
                     ANSWERS
                   </button>
               </p>
-              <div class="collapse" id="collapseExample{{ forloop.counter }}">
-                <div class="card card-body">
-                    <form action="{%url 'add-answer' q.id %}" method="post">
-                        {%csrf_token%}
-                        <textarea name="answer" id="" cols="30" rows="3" class="form-control"></textarea>
-                        <input class="ms-5 mt-5 btn btn-sm btn-success" type="submit" value="ADD">
-                    </form>
-                </div>
-              </div>
-
               <div class="collapse" id="answerlist{{ forloop.counter }}">
                 <div class="card card-body">
                      <ul class="list-group">

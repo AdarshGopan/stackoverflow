@@ -16,7 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myapp import views
+from django.conf import settings
+from django.conf.urls.static import static
+from rest_framework.routers import DefaultRouter
+from stackapi.views import QuestionView,AnswersView,QuestionDeleteView
+from rest_framework.authtoken.views import ObtainAuthToken
 
+router=DefaultRouter()
+router.register("api/questions",QuestionView,basename="questions")
+router.register("api/answers",AnswersView,basename="answers")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('register',views.SignUpView.as_view(),name="register"),
@@ -24,5 +32,10 @@ urlpatterns = [
     path('stack/home',views.HomeView.as_view(),name="home"),
     path('questions/<int:id>/answers/add',views.add_answer,name="add-answer"),
     path('answer/<int:id>/upvotes/add',views.upvote_view,name="add-upvote"),
-]
+    path('stack/logout',views.sign_out,name="signout"),
+    path('stack/myquestions/list',views.MyQuestions.as_view(),name="myquestions"),
+    path("token/",ObtainAuthToken.as_view()),
+    path("question/<int:pk>/",QuestionDeleteView.as_view(),name="delete-question"),
+ ]+router.urls
+#  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

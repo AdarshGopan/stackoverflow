@@ -26,6 +26,10 @@ class Answers(models.Model):
     created_date=models.DateField(auto_now_add=True)
     up_vote=models.ManyToManyField(User,related_name="upvotes")
     
+    @property
+    def up_vote_count(self):
+        return self.up_vote.all().count()
+
     def __str__(self):
          return self.answer
 
